@@ -25,6 +25,16 @@ const createStationValidation = function (data) {
     TelNo: Joi.string().required(),
     Latitude: Joi.string().required(),
     Longitude: Joi.string().required(),
+    Params: Joi.array().items(
+      Joi.object({
+        Name: Joi.string().required(),
+        Code: Joi.string().required(),
+        Unit: Joi.string().required(),
+        Min: Joi.number().required(),
+        Max: Joi.number().required(),
+        Color: Joi.string().required(),
+      })
+    ),
   });
 
   return schema.validate(data);

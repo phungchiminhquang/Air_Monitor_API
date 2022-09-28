@@ -37,6 +37,7 @@ router.post("/createStation", async (req, res) => {
     TelNo: req.body.TelNo,
     Latitude: req.body.Latitude,
     Longitude: req.body.Longitude,
+    Params: req.body.Params,
   });
 
   try {
@@ -50,7 +51,7 @@ router.post("/createStation", async (req, res) => {
   // check if
 });
 
-router.get("/getAll", async (req, res) => {
+router.get("/getAllStation", async (req, res) => {
   try {
     const all = await StationModel.find({}, { _id: 0, __v: 0 }); //exclude _id and __v properties
     return res.status(200).json(all);
@@ -70,18 +71,17 @@ router.patch("/updateStation", async (req, res) => {
   // validate the updateStation information
   // must have the id of the station included
   const Id = req.body.Id.trim();
-  console.log(Id);
   if (!Id) {
     return res.status(500).json({ message: "missing the id" });
   }
 
+  // findOneAndUpdate Station
   const filter = { Id: Id };
   const update = req.body;
   try {
     var doc = await StationModel.findOneAndUpdate(filter, update, {
       new: true,
-      fields: { _id: 0, __v: 0 }, //exclude _id and __v
-    });
+    }).select({ _id: 0, __v: 0 }); //exclude _id and __v
 
     return res.json(doc);
   } catch (error) {

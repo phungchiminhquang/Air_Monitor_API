@@ -37,12 +37,13 @@ router.post("/register", async (req, res) => {
 
   // try to save new user
   try {
-    const newUser = await user.save();
-    // console.log(newUser);
-    // just return for confirmation => no useful meaning
-    return res
-      .status(200)
-      .json({ message: "Successfully registered", user: newUser });
+    let newUser = await user.save();
+    newUser = newUser.toObject();
+
+    return res.status(200).json({
+      message: "Successfully registered",
+      user: newUser,
+    });
   } catch (err) {
     return res.status(500).json(err);
   }
@@ -57,7 +58,7 @@ router.post("/login", async (req, res) => {
   }
 
   // check in if the email existed
-  const user = await UserModel.findOne({ username: req.body.username });
+  let user = await UserModel.findOne({ username: req.body.username });
   if (!user) {
     return res.status(200).send("username is incorrect");
   }
@@ -71,6 +72,7 @@ router.post("/login", async (req, res) => {
   const accessToken = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET);
   // I skip the refreshToken part for simplest cases
   // const refreshToken = jwt.sign(user, process.env.TOKEN_SECRET);
+
   return res.send({
     message: "success",
     accessToken: accessToken,
