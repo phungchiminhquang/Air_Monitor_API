@@ -1,28 +1,7 @@
-import express from "express";
 import { createStationValidation } from "../validation.js";
 import StationModel from "../model/stationModel.js";
 
-const router = express.Router();
-
-const verifyStation = (req, res, next) => {
-  // check if all the infomation is enough to create the new station
-
-  next();
-};
-
-// Send Data from harware to the server
-// /api/station/sendData
-router.post("/sendData", (req, res) => {
-  //   console.log(req.query);
-  // to make a easier task for hardware
-  // data that hardware send to server must be attached in url link
-  // aka using req.query to get that data from hardware
-  res.send("this will be the data that hardware sent to server");
-});
-
-// /api/station/createStation
-// Note must have "withValue"
-router.post("/createStation", async (req, res) => {
+const createStation = async (req, res) => {
   // assign new station information
   const { error } = createStationValidation(req.body);
   if (error) {
@@ -49,28 +28,21 @@ router.post("/createStation", async (req, res) => {
     return res.status(500).json(err);
   }
   // check if
-});
+};
 
-router.get("/getAllStation", async (req, res) => {
+const getAllStation = async (req, res) => {
   try {
-    const all = await StationModel.find({}, { _id: 0, __v: 0 }); //exclude _id and __v properties
-    return res.status(200).json(all);
+    const allStation = await StationModel.find({});
+    return res.status(200).json(allStation);
   } catch (error) {
     return res.status(500).json(error);
   }
-});
+};
 
-// get specified station information
-// api/station/getStationData
-router.get("/getStationData", verifyStation, (req, res) => {
-  // remember to provide stationId
-  res.send("This will be the data of the specified station");
-});
-
-router.patch("/updateStation", async (req, res) => {
+const updateStation = async (req, res) => {
   // validate the updateStation information
   // must have the id of the station included
-  const Id = req.body.Id.trim();
+  const Id = req.body.Id.trim(); //remove unwanted space from Id string
   if (!Id) {
     return res.status(500).json({ message: "missing the id" });
   }
@@ -81,12 +53,12 @@ router.patch("/updateStation", async (req, res) => {
   try {
     var doc = await StationModel.findOneAndUpdate(filter, update, {
       new: true,
-    }).select({ _id: 0, __v: 0 }); //exclude _id and __v
+    });
 
     return res.json(doc);
   } catch (error) {
     return res.status(500).send(error);
   }
-});
+};
 
-export { router };
+export { createStation, getAllStation, updateStation };

@@ -1,16 +1,9 @@
-import express from "express";
-import UserModel from "../model/userModel.js";
 import { registerValidation, loginValidation } from "../validation.js";
-import { verifyToken } from "./verifyToken.js";
 import bcrypt from "bcryptjs";
+import UserModel from "../model/userModel.js";
 import jwt from "jsonwebtoken";
 
-const router = express.Router();
-
-//Validate
-
-// api/user/register
-router.post("/register", async (req, res) => {
+const register = async (req, res) => {
   // Let validate the data before we make a user
   const { error } = registerValidation(req.body);
   if (error) {
@@ -38,7 +31,6 @@ router.post("/register", async (req, res) => {
   // try to save new user
   try {
     let newUser = await user.save();
-    newUser = newUser.toObject();
 
     return res.status(200).json({
       message: "Successfully registered",
@@ -47,11 +39,9 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     return res.status(500).json(err);
   }
-});
+};
 
-// Login
-// api/user/login
-router.post("/login", async (req, res) => {
+const login = async (req, res) => {
   const { error } = loginValidation(req.body);
   if (error) {
     return res.status(400).json(error.details[0].message);
@@ -62,7 +52,7 @@ router.post("/login", async (req, res) => {
   if (!user) {
     return res.status(200).send("username is incorrect");
   }
-  //Check in password is correct ???
+  //Check if password is correct ???
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) {
     return res.status(400).send("password is incorrect");
@@ -71,20 +61,20 @@ router.post("/login", async (req, res) => {
   // Create and assign a token, I dont set the expires time on purpose for simple cases
   const accessToken = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET);
   // I skip the refreshToken part for simplest cases
-  // const refreshToken = jwt.sign(user, process.env.TOKEN_SECRET);
+  // const refreshToken = jwt.sign(user.toJSON(), process.env.TOKEN_SECRET);
 
   return res.send({
     message: "success",
     accessToken: accessToken,
-    expiresTime: "infinity and beyond",
+    expiredTime: "infinity and beyond",
     user: user,
   });
-});
+};
 
-// api/user/getInfo
-// router.get("/getInfo", verifyToken, (req, res) => {
+// send user._id or accessToken to get this infomation in case infomation is updated
+// const getUserInfo = (req, res) => {
 //   console.log(req.header);
 //   res.send("this will be the user info");
-// });
+// };
 
-export { router };
+export { register, login };

@@ -77,7 +77,7 @@ const stationSchema = new mongoose.Schema(
     },
   },
   {
-    timestamps: { createdAt: "CreatedDate", updatedAt: "UpdatedDate" },
+    timestamps: true,
     toJSON: {
       transform: function (doc, ret) {
         delete ret._id;
