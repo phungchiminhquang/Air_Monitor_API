@@ -18,8 +18,8 @@ const loginValidation = function (data) {
 };
 const createStationValidation = function (data) {
   const schema = Joi.object({
-    Id: Joi.string().required(),
-    Name: Joi.string().required(),
+    StationId: Joi.string().required(),
+    StationName: Joi.string().required(),
     DeviceCode: Joi.string().required(),
     Address: Joi.string().required(),
     TelNo: Joi.string().required(),

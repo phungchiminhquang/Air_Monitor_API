@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 import "datejs";
-const ValueDocSchema = new mongoose.Schema(
+const paramRecSchema = new mongoose.Schema(
   {
-    ParamName: String,
-    ParamValue: Number,
-    ParamStatus: Number,
+    paramName: String,
+    paramValue: Number,
+    paramStatus: Number,
   },
   {
     toJSON: {
@@ -17,27 +17,28 @@ const ValueDocSchema = new mongoose.Schema(
 
 const valueSchema = new mongoose.Schema(
   {
-    HappenedTime: Date,
-    ValueDoc: [ValueDocSchema],
+    happenedTime: Date,
+    paramRecArray: [paramRecSchema],
   },
   {
     toJSON: {
       transform: function (doc, ret) {
         delete ret._id;
-        ret.HappenedTime = ret.HappenedTime.toString("yyyy-mm-ddTHH:mm:ss"); //convert to current localTimeZone
+        ret.happenedTime = ret.happenedTime.toString("yyyy-mm-ddTHH:mm:ss"); //convert to current localTimeZone
       },
     },
   }
 );
 const dataSchema = new mongoose.Schema(
   {
-    _id: {
-      type: String,
-      required: true,
-    },
-    stationId: {
-      type: String,
-      required: true,
+    compositeId: {
+      stationId: {
+        type: String,
+      },
+      firstRecTime: {
+        type: Date,
+        default: Date.now(),
+      },
     },
     count: {
       type: Number,
@@ -52,6 +53,10 @@ const dataSchema = new mongoose.Schema(
     toJSON: {
       transform: function (doc, ret) {
         delete ret.__v;
+        delete ret._id;
+        ret.compositeId.firstRecTime = ret.compositeId.firstRecTime.toString(
+          "yyyy-mm-ddTHH:mm:ss"
+        );
       },
     },
   }
@@ -59,4 +64,4 @@ const dataSchema = new mongoose.Schema(
 
 const DataModel = mongoose.model("data", dataSchema);
 
-export default DataModel;
+export { DataModel, valueSchema };

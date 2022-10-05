@@ -167,4 +167,6 @@ dist
 *.code-workspace
 #Ignore the todo.txt file
 *todo.txt
+#Ignore the dataSample.json file
+*dataSample.json
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node
