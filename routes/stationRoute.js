@@ -9,21 +9,21 @@ import { MAXIMUM_COUNT, INTERVAL } from "../controller/util/config.js";
 const router = express.Router();
 
 // /api/station/createStation
-router.post("/createStation", stationController.createStation);
-router.delete("/deleteStation", stationController.deleteStation);
-router.patch("/updateStation", stationController.updateStation);
-router.get("/getAllStation", stationController.getAllStation);
+router.post("/createStation", verifyToken, stationController.createStation);
+router.delete("/deleteStation", verifyToken, stationController.deleteStation);
+router.patch("/updateStation", verifyToken, stationController.updateStation);
+router.get("/getAllStation", verifyToken, stationController.getAllStation);
 
 // send value from harware to the server
 // /api/station/sendValue
 router.post("/sendValue", stationController.sendValue);
 // getAllData of a station
-router.get("/getAllData", stationController.getAllData);
+router.get("/getAllData", verifyToken, stationController.getAllData);
 
 // const computeAverageByInterval = function (valueDocArray, interval) {};
 
 // get specified station information
 // api/station/getValue
-router.get("/getData", stationController.getData);
+router.get("/getData", verifyToken, stationController.getData);
 
 export { router };
