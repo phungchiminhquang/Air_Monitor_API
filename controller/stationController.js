@@ -34,7 +34,22 @@ const createStation = async (req, res) => {
   } catch (err) {
     return res.status(500).json(err);
   }
-  // check if
+};
+
+const deleteStation = async (req, res) => {
+  const stationId = req.query.stationId;
+  if (stationId === undefined) {
+    return res.status(500).send({ error: "missing Station ID" });
+  }
+
+  const filter = { StationId: stationId };
+
+  try {
+    const result = await StationModel.deleteOne(filter);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
 };
 
 const getAllStation = async (req, res) => {
@@ -169,6 +184,7 @@ const getAllData = async (req, res) => {
 
 export {
   createStation,
+  deleteStation,
   getAllStation,
   updateStation,
   sendValue,

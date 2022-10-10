@@ -9,6 +9,7 @@ const router = express.Router();
 
 // /api/station/createStation
 router.post("/createStation", stationController.createStation);
+router.delete("/deleteStation", stationController.deleteStation);
 router.patch("/updateStation", stationController.updateStation);
 router.get("/getAllStation", stationController.getAllStation);
 
