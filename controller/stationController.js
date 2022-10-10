@@ -25,12 +25,14 @@ const createStation = async (req, res) => {
     Longitude: req.body.Longitude,
     Params: req.body.Params,
   });
-
+  console.log(station);
   try {
     const newStation = await station.save();
-    return res
-      .status(200)
-      .json({ message: "Station successfully created", station: newStation });
+
+    return res.json({
+      message: "Station successfully created",
+      station: newStation,
+    });
   } catch (err) {
     return res.status(500).json(err);
   }

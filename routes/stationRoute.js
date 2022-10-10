@@ -1,6 +1,7 @@
 import express from "express";
 import * as stationController from "../controller/stationController.js";
 import "datejs";
+import { verifyToken } from "./verifyToken.js";
 import { DataModel } from "../model/dataModel.js";
 import StationModel from "../model/stationModel.js";
 import { MAXIMUM_COUNT, INTERVAL } from "../controller/util/config.js";

@@ -3,6 +3,7 @@ import { router as userRouter } from "./routes/userRoute.js";
 import { mongoose } from "mongoose";
 import * as dotenv from "dotenv";
 import { router as stationRouter } from "./routes/stationRoute.js";
+import { verifyToken } from "./routes/verifyToken.js";
 const app = express();
 
 //Connect to DB;
@@ -15,7 +16,6 @@ mongoose.connect(process.env.DB_CONNECT, (err) => {
 
 //Middleware
 app.use(express.json());
-
 //import router
 app.use("/api/user", userRouter);
 app.use("/api/station", stationRouter);

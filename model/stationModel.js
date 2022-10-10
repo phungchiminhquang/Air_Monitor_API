@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 import { valueSchema } from "./dataModel.js";
+import "datejs";
 const paramSchema = new mongoose.Schema(
   {
     Name: {
@@ -43,7 +44,6 @@ const stationSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
-      // select: 0,// could set the select to 0 to exclude it from result of query
     },
     StationName: {
       type: String,
@@ -86,8 +86,8 @@ const stationSchema = new mongoose.Schema(
       transform: function (doc, ret) {
         delete ret._id;
         delete ret.__v;
-        ret.createdAt = ret.createdAt.toString("yyyy-mm-ddTHH:mm:ss");
-        ret.updatedAt = ret.updatedAt.toString("yyyy-mm-ddTHH:mm:ss");
+        ret.createdAt = ret.createdAt.toString("yyyy-MM-ddTHH:mm:ss");
+        ret.updatedAt = ret.updatedAt.toString("yyyy-MM-ddTHH:mm:ss");
       },
     },
   }

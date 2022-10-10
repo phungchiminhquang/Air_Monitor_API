@@ -10,27 +10,18 @@ const register = async (req, res) => {
     return res.status(400).json(error.details[0].message);
   }
 
-  //Check if username is already registered
-  // const usernameExisted = await UserModel.findOne({
-  //   username: req.body.username,
-  // });
-  // if (usernameExisted) {
-  //   return res.status(200).send("username already registered");
-  // }
-
   //Hash the password
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
   // assgin user info
   const user = new UserModel({
-    username: req.body.username,
+    userName: req.body.userName,
     password: hashedPassword,
   });
-
   // try to save new user
   try {
-    let newUser = await user.save();
+    const newUser = await user.save();
 
     return res.status(200).json({
       message: "Successfully registered",
@@ -72,9 +63,20 @@ const login = async (req, res) => {
 };
 
 // send user._id or accessToken to get this infomation in case infomation is updated
-// const getUserInfo = (req, res) => {
-//   console.log(req.header);
-//   res.send("this will be the user info");
-// };
+const getUserInfo = async (req, res) => {
+  const userName = req.body.userName;
+  if (!userName) {
+    return res.status(500).json({ error: "missing UserName" });
+  }
 
-export { register, login };
+  const filter = { userName: userName };
+  try {
+    const user = await UserModel.findOne(filter);
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+  res.send("this will be the user info");
+};
+
+export { register, login, getUserInfo };

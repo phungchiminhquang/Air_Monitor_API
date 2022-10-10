@@ -1,6 +1,6 @@
 import express from "express";
 import * as userController from "../controller/userController.js";
-
+import { verifyToken } from "./verifyToken.js";
 const router = express.Router();
 
 // api/user/register
@@ -10,7 +10,7 @@ router.post("/register", userController.register);
 router.post("/login", userController.login);
 
 // api/user/getInfo
-// router.get("/getInfo",verifyToken, userController.getUserInfo);
+router.get("/getInfo", verifyToken, userController.getUserInfo);
 
 // api/user/updateUserInfo
 
