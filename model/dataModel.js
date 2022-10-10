@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import "datejs";
-const paramRecSchema = new mongoose.Schema(
+const paramDocSchema = new mongoose.Schema(
   {
     paramName: String,
     paramValue: Number,
@@ -18,13 +18,13 @@ const paramRecSchema = new mongoose.Schema(
 const valueSchema = new mongoose.Schema(
   {
     happenedTime: Date,
-    paramRecArray: [paramRecSchema],
+    paramDoc: [paramDocSchema],
   },
   {
     toJSON: {
       transform: function (doc, ret) {
         delete ret._id;
-        ret.happenedTime = ret.happenedTime.toString("yyyy-mm-ddTHH:mm:ss"); //convert to current localTimeZone
+        ret.happenedTime = ret.happenedTime.toString("yyyy-MM-ddTHH:mm:ss"); //convert to current localTimeZone
       },
     },
   }
@@ -44,9 +44,7 @@ const dataSchema = new mongoose.Schema(
       type: Number,
       default: 1,
     },
-    data: {
-      type: [valueSchema],
-    },
+    data: [valueSchema],
   },
   {
     collection: "data",
@@ -55,7 +53,7 @@ const dataSchema = new mongoose.Schema(
         delete ret.__v;
         delete ret._id;
         ret.compositeId.firstRecTime = ret.compositeId.firstRecTime.toString(
-          "yyyy-mm-ddTHH:mm:ss"
+          "yyyy-MM-ddTHH:mm:ss"
         );
       },
     },

@@ -75,7 +75,7 @@ const stationSchema = new mongoose.Schema(
     Params: {
       type: [paramSchema],
     },
-    Value: {
+    latestValue: {
       type: valueSchema,
       default: null,
     },
