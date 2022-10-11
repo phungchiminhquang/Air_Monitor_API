@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const registerValidation = function (data) {
   const schema = Joi.object({
-    userName: Joi.string().min(3).required(),
+    username: Joi.string().min(3).required(),
     password: Joi.string().min(6).required(),
   });
 
@@ -10,7 +10,7 @@ const registerValidation = function (data) {
 };
 const loginValidation = function (data) {
   const schema = Joi.object({
-    userName: Joi.string().min(3).required(),
+    username: Joi.string().min(3).required(),
     password: Joi.string().min(6).required(),
   });
 

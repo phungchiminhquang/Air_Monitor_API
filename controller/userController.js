@@ -16,7 +16,7 @@ const register = async (req, res) => {
 
   // assgin user info
   const user = new UserModel({
-    userName: req.body.userName,
+    username: req.body.username,
     password: hashedPassword,
   });
   // try to save new user
@@ -28,17 +28,18 @@ const register = async (req, res) => {
       user: newUser,
     });
   } catch (err) {
-    return res.status(500).json(err);
+    return res.status(500).json({ message: err.message });
   }
 };
 
 const login = async (req, res) => {
   const { error } = loginValidation(req.body);
+  console.log(req.body);
   if (error) {
     return res.status(400).json(error.details[0].message);
   }
 
-  // check in if the email existed
+  // check in if the username existed
   let user = await UserModel.findOne({ username: req.body.username });
   if (!user) {
     return res.status(200).send("username is incorrect");
@@ -64,12 +65,12 @@ const login = async (req, res) => {
 
 // send user._id or accessToken to get this infomation in case infomation is updated
 const getUserInfo = async (req, res) => {
-  const userName = req.body.userName;
-  if (!userName) {
-    return res.status(500).json({ error: "missing UserName" });
+  const username = req.body.username;
+  if (!username) {
+    return res.status(500).json({ error: "missing username" });
   }
 
-  const filter = { userName: userName };
+  const filter = { username: username };
   try {
     const user = await UserModel.findOne(filter);
     return res.json(user);
