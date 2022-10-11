@@ -9,7 +9,8 @@ file structure contains 3 main folder:
 * Model folder: works as Model in MVC pattern. Contains Model to mapping data when sending or receiving data.
 
 ## MongoDB Schema pattern
-This project using [Bucket pattern](https://www.mongodb.com/blog/post/paging-with-the-bucket-pattern--part-1?fbclid=IwAR3TENmPsyGvkEsK-uW42bCl8xosebiUXlnNxO907pLZmuuPf0926uJWzPI) introduced by MongoDB to store data collection. There is a slightly different is instead of using composite _id(like in the article), I am using composite object to make unique key for each document.
+This project using [Bucket pattern](https://www.mongodb.com/blog/post/paging-with-the-bucket-pattern--part-1?fbclid=IwAR3TENmPsyGvkEsK-uW42bCl8xosebiUXlnNxO907pLZmuuPf0926uJWzPI) introduced by MongoDB to store data collection (you can see other [12 patterns MongoDB](https://www.mongodb.com/blog/post/building-with-patterns-a-summary) introduced). There is a slightly different is instead of using composite _id
+ (like the one in the Bucket pattern article), I am using composite object to make unique key for each document.
     
     compositeId:{
         stationId:"1",
