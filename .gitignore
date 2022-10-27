@@ -77,7 +77,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-# .env
+.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -169,4 +169,6 @@ dist
 *todo.txt
 #Ignore the dataSample.json file
 *dataSample.json
+
+package-lock.json
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,node
