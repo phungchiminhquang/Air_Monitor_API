@@ -77,7 +77,7 @@ web_modules/
 .yarn-integrity
 
 # dotenv environment variable files
-.env
+# .env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -166,7 +166,7 @@ dist
 # Ignore code-workspaces
 *.code-workspace
 #Ignore the todo.txt file
-*todo.txt
+# *todo.txt
 #Ignore the dataSample.json file
 *dataSample.json
 
