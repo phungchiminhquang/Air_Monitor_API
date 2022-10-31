@@ -11,9 +11,11 @@ router.post("/login", userController.login);
 
 // api/user/getInfo
 router.get("/getInfo", verifyToken, userController.getUserInfo);
-
 // api/user/updateUserInfo
-
+router.patch("/updateUserInfo", verifyToken, userController.updateUserInfo);
 // api/user/getUserInfo
+
+// api/user/deleteUser
+router.post("/deleteUser", verifyToken, userController.deleteUser);
 
 export { router };
