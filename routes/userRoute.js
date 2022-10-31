@@ -10,12 +10,12 @@ router.post("/register", userController.register);
 router.post("/login", userController.login);
 
 // api/user/getInfo
-router.get("/getInfo", verifyToken, userController.getUserInfo);
-// api/user/updateUserInfo
-router.patch("/updateUserInfo", verifyToken, userController.updateUserInfo);
-// api/user/getUserInfo
+router.get("/getInfo", verifyToken, userController.getInfo);
+// api/user/update
+router.patch("/update", verifyToken, userController.updateUser);
 
-// api/user/deleteUser
-router.post("/deleteUser", verifyToken, userController.deleteUser);
+
+// api/user/delete
+router.post("/delete", verifyToken, userController.deleteUser);
 
 export { router };

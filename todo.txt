@@ -8,3 +8,4 @@ research about average formular for AirQuality in 15/20/60 minutes.
 the getUserInfo request should attach userInfo in param query because the info is too simple to put it in body part
 convert create day in userModel
 fix the error that api dont need authorization to do sensitive action
+unify the format of returning error

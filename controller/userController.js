@@ -64,7 +64,7 @@ const login = async (req, res) => {
 };
 
 // send user._id or accessToken to get this infomation in case infomation is updated
-const getUserInfo = async (req, res) => {
+const getInfo = async (req, res) => {
   const username = req.query.username;
   if (!username) {
     return res.status(500).json({ error: "missing username" });
@@ -77,11 +77,9 @@ const getUserInfo = async (req, res) => {
   } catch (error) {
     return res.status(500).json(error);
   }
-  res.send("this will be the user info");
 };
 
 const deleteUser = async (req, res) => {
-  console.log("this is from deleteUser");
   const username = req.query.username;
   if (!username) {
     return res.status(500).json({ error: "missing username" });
@@ -96,28 +94,39 @@ const deleteUser = async (req, res) => {
   }
 };
 
-const updateUserInfo = async (req, res) => {
-  console.log("Updating user info");
+const updateUser = async (req, res) => {
   const _id = req.body._id;
   if (!_id) {
     return res.status(500).json({ error: "missing _id" });
   }
 
-  const oldPassword = req.body.oldPassword;
-  const newPassword = req.body.newPassword;
-  if (oldPassword && newPassword) {
-    // mean user want to change the password
-  }
-  const filter = { _id: _id };
-  const update = req.body;
   try {
-    const user = await UserModel.findOneAndUpdate(filter, update, {
-      new: true,
-    });
-    return res.json(user);
+    const user = await UserModel.findById(_id);
+    const oldPassword = req.body.oldPassword;
+    const newPassword = req.body.newPassword;
+
+    if (oldPassword && newPassword) {
+      // mean user want to change the password
+      const validPass = await bcrypt.compare(oldPassword, user.password);
+      if (!validPass) {
+        return res.status(500).json("oldpassword is incorrect");
+      }
+
+      // hasing password
+      const salt = await bcrypt.genSalt(10);
+
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+      // assign password
+      delete req.body.oldPassword;
+      delete req.body.newPassword;
+      req.body.password = hashedPassword;
+    }
+    const result = await UserModel.findByIdAndUpdate(_id, req.body);
+    return res.json(result);
   } catch (error) {
     return res.status(500).json(error);
   }
 };
 
-export { register, login, getUserInfo, deleteUser, updateUserInfo };
+export { register, login, getInfo, deleteUser, updateUser };
