@@ -4,7 +4,7 @@ const convertStringToValueModel = function (paramString) {
   mappedValue.paramDoc = [];
   for (let i = 0; i < paramArray.length - 1; i++) {
     const param = paramArray[i].split("[")[0];
-    console.log(i + "__" + param);
+    // console.log(i + "__" + param);
     if (param != "TimeStamp") {
       const value = parseFloat(paramArray[i].split("[")[1].slice(0, -1));
       mappedValue.paramDoc[i] = {
