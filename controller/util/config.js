@@ -1,4 +1,4 @@
-const MAXIMUM_COUNT = 5; //using in data document
+const MAXIMUM_REC_PER_DOC = 1000; // maximun record per document
 const INTERVAL = 5; //5 minute
 
-export { MAXIMUM_COUNT, INTERVAL };
+export { MAXIMUM_REC_PER_DOC, INTERVAL };

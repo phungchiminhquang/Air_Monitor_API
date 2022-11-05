@@ -1,7 +1,7 @@
 import { createStationValidation } from "../validation.js";
 import StationModel from "../model/stationModel.js";
 import { DataModel } from "../model/dataModel.js";
-import { MAXIMUM_COUNT } from "./util/config.js";
+import { MAXIMUM_REC_PER_DOC } from "./util/config.js";
 import { valueDocTimeFilter, pagingFilter } from "./util/getDataHelpers.js";
 import {
   convertStringToValueModel,
@@ -93,7 +93,7 @@ const sendValue = async (req, res) => {
   const happenedTime = req.value.happenedTime;
   const filter = {
     "compositeId.stationId": stationId,
-    count: { $lt: MAXIMUM_COUNT },
+    count: { $lt: MAXIMUM_REC_PER_DOC },
   };
   const update = {
     $push: {

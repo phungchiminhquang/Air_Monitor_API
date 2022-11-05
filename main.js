@@ -9,15 +9,15 @@ const app = express();
 //Connect to DB;
 dotenv.config();
 
-// mongoose.connect(process.env.DB_CONNECT, (err) => {
-//   if (err) throw err;
-//   console.log("connected to DB");
-// });
-
-mongoose.connect('mongodb://127.0.0.1:27017', (err) => {
+mongoose.connect(process.env.DB_CONNECT, (err) => {
   if (err) throw err;
   console.log("connected to DB");
 });
+
+// mongoose.connect('mongodb://127.0.0.1:27017', (err) => {
+//   if (err) throw err;
+//   console.log("connected to DB");
+// });
 
 //Middleware
 app.use(express.json());

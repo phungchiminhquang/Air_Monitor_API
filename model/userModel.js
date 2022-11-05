@@ -28,6 +28,15 @@ const userSchema = new mongoose.Schema(
 );
 
 userSchema.plugin(uniqueValidator);
+// userSchema.pre('findOneAndUpdate', function (next){
+//   var user = this;
+//   if(!user.isModified("password"))return next();
+
+// })
+
+// userSchema.methods.validatePassword = async function validatePassword(data) {
+//   return bcrypt.compare(data, this.password);
+// };
 const UserModel = mongoose.model("user", userSchema);
 
 export default UserModel;
