@@ -15,7 +15,7 @@ router.get("/getAllStation", verifyToken, stationController.getAllStation);
 
 // send value from harware to the server
 // /api/station/sendValue
-router.post("/sendValue", stationController.sendValue);
+router.get("/sendValue", stationController.sendValue);
 // getAllData of a station
 router.get("/getAllData", verifyToken, stationController.getAllData);
 
