@@ -17,7 +17,10 @@ const paramDocSchema = new mongoose.Schema(
 
 const valueSchema = new mongoose.Schema(
   {
-    happenedTime: Date,
+    happenedTime: {
+      type: Date,
+      default: Date.now(),
+    },
     paramDoc: [paramDocSchema],
   },
   {

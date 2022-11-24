@@ -12,9 +12,13 @@ const convertStringToValueModel = function (paramString) {
         paramValue: value,
         paramStatus: 0,
       };
+      // console.log(mappedValue.paramDoc[i]);
     } else {
       // if param == "TimeStamp"
-      const value = Date.parse(paramArray[i].split("[")[1].slice(0, -1));
+      let value = Date.parse(paramArray[i].split("[")[1].slice(0, -1));
+      console.log("value = " + value);
+      if (value == null) value = Date.now();
+      console.log("value = " + value);
       mappedValue.happenedTime = value;
     }
   }
@@ -30,10 +34,10 @@ const updateStationLatestValue = async function (stationId, value) {
     });
     // console.log("sucessfully update latest value_____________");
     // console.log(result);
+    return;
   } catch (error) {
     return error;
   }
-  return;
 };
 
 export { convertStringToValueModel, updateStationLatestValue };

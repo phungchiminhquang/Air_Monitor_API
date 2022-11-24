@@ -2,7 +2,11 @@ import { createStationValidation } from "../validation.js";
 import StationModel from "../model/stationModel.js";
 import { DataModel } from "../model/dataModel.js";
 import { MAXIMUM_REC_PER_DOC } from "./util/config.js";
-import { valueDocTimeFilter, pagingFilter } from "./util/getDataHelpers.js";
+import {
+  valueDocTimeFilter,
+  valueDocAQIComputing,
+  pagingFilter,
+} from "./util/getDataHelpers.js";
 import {
   convertStringToValueModel,
   updateStationLatestValue,
@@ -89,8 +93,9 @@ const sendValue = async (req, res) => {
   const stationId = req.query.stationcode;
   // split the value of param from string
   req.value = convertStringToValueModel(req.query.data);
+  console.log(req.value);
+  var happenedTime = req.value.happenedTime;
 
-  const happenedTime = req.value.happenedTime;
   const filter = {
     "compositeId.stationId": stationId,
     count: { $lt: MAXIMUM_REC_PER_DOC },
@@ -155,17 +160,21 @@ const getData = async (req, res) => {
 
   try {
     const bucketDoc = await DataModel.find(bucketDocFilter);
-    const filtedValueDoc = valueDocTimeFilter(
+    const filtByTimeValue = valueDocTimeFilter(
       bucketDoc,
       query.startTime,
       query.endTime
     );
-    const filtedPaging = pagingFilter(
-      filtedValueDoc,
+    const computeAQIValue = valueDocAQIComputing(
+      filtByTimeValue,
+      query.interval
+    );
+    const pagedValue = pagingFilter(
+      filtByTimeValue,
       query.pageSize,
       query.pageNum
     );
-    return res.json(filtedPaging);
+    return res.json(pagedValue);
   } catch (error) {
     return res.status(500).json(error);
   }
