@@ -63,16 +63,25 @@ const login = async (req, res) => {
   });
 };
 
-// send user._id or accessToken to get this infomation in case infomation is updated
+const getAllUser = async (req, res) => {
+  try {
+    const result = await UserModel.find({});
+
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json(error);
+  }
+};
+
+// submit user._id or accessToken to get this infomation in case infomation is updated
 const getInfo = async (req, res) => {
-  const username = req.query.username;
-  if (!username) {
-    return res.status(500).json({ error: "missing username" });
+  const _id = req.query._id;
+  if (!_id) {
+    return res.status(500).json({ error: "missing _id" });
   }
 
-  const filter = { username: username };
   try {
-    const user = await UserModel.findOne(filter);
+    const user = await UserModel.findById(_id);
     return res.json(user);
   } catch (error) {
     return res.status(500).json(error);
@@ -80,12 +89,13 @@ const getInfo = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-  const username = req.query.username;
-  if (!username) {
-    return res.status(500).json({ error: "missing username" });
+  console.log("deleteUser");
+  const _id = req.query._id;
+  if (!_id) {
+    return res.status(500).json({ error: "missing _id" });
   }
 
-  const filter = { username: username };
+  const filter = { _id: _id };
   try {
     const user = await UserModel.deleteOne(filter);
     return res.json(user);
@@ -129,4 +139,4 @@ const updateUser = async (req, res) => {
   }
 };
 
-export { register, login, getInfo, deleteUser, updateUser };
+export { register, login, getInfo, deleteUser, updateUser, getAllUser };
