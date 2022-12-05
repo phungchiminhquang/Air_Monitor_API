@@ -9,3 +9,10 @@ the getUserInfo request should attach userInfo in param query because the info i
 convert create day in userModel
 fix the error that api dont need authorization to do sensitive action
 unify the format of returning error
+
+Nếu có ít nhất 2 trong 3 giá trị c1, c2, c3 có dữ liệu thì mới tính được giá 
+trị Nowcast, ngược lại coi như “không có dữ liệu” (không tính được giá trị 
+Nowcast).
+
+Nếu ci không có giá trị thì lấy wi-1 = 0.
+test using harcode table

@@ -2,8 +2,6 @@ import express from "express";
 import * as stationController from "../controller/stationController.js";
 import "datejs";
 import { verifyToken } from "./verifyToken.js";
-import { DataModel } from "../model/dataModel.js";
-import StationModel from "../model/stationModel.js";
 
 const router = express.Router();
 
@@ -15,14 +13,5 @@ router.get("/getAllStation", verifyToken, stationController.getAllStation);
 
 // send value from harware to the server
 // /api/station/sendValue
-router.get("/sendValue", stationController.sendValue);
-// getAllData of a station
-router.get("/getAllData", verifyToken, stationController.getAllData);
-
-// const computeAverageByInterval = function (valueDocArray, interval) {};
-
-// get specified station information
-// api/station/getValue
-router.get("/getData", verifyToken, stationController.getData);
 
 export { router };

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
-import { valueSchema } from "./dataModel.js";
 import "datejs";
+
 const paramSchema = new mongoose.Schema(
   {
     Name: {
@@ -76,7 +76,7 @@ const stationSchema = new mongoose.Schema(
       type: [paramSchema],
     },
     latestValue: {
-      type: valueSchema,
+      type: mongoose.Schema.Types.Mixed,
       default: null,
     },
   },
