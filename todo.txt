@@ -1,10 +1,11 @@
 validate the data part(must not be empty) in sendStationData request
 validate if the station is exists.
 
+optimise the finding time when startTime or endTime is an empty string(null).--> currently not optimised
+
+
 research about average formular for AirQuality in 15/20/60 minutes.
-
+the getUserInfo request should attach userInfo in param query because the info is too simple to put it in body part
 convert create day in userModel
-
+fix the error that api dont need authorization to do sensitive action
 unify the format of returning error
-
-getAllUser to request all existing user in db

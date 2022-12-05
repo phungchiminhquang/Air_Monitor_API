@@ -21,8 +21,6 @@ const userSchema = new mongoose.Schema(
         delete ret.password;
         // delete ret._id;
         delete ret.__v;
-        ret.createdAt = ret.createdAt.toString("yyyy-MM-ddTHH:mm:ss");
-        ret.updatedAt = ret.updatedAt.toString("yyyy-MM-ddTHH:mm:ss");
       },
     },
     timestamps: true,
